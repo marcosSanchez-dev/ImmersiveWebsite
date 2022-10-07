@@ -2,9 +2,11 @@
   "name": "immersivewebsite",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --progress --config webpack.config.build.js",
-    "development": "webpack serve --progress --config webpack.config.development.js",
-    "start": "npm run development"
+    "backend:build": "node app.js",
+    "backend:development": "nodemon app.js",
+    "frontend:build": "webpack --progress --config webpack.config.build.js",
+    "frontend:development": "webpack serve --progress --config webpack.config.development.js",
+    "start": "concurrently --kill-others \"npm run backend:development\" \"npm run frontend:development\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "devDependencies": {
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
+    "concurrently": "^7.4.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "eslint": "^7.32.0",
@@ -43,5 +46,10 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.11.1",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.20",
+    "pug": "^3.0.2"
   }
 }

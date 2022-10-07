@@ -38,7 +38,6 @@ module.exports = {
 
     new MiniCssExtractPlugin({
       filename: "[name].css",
-      chunkFilename: "[id].css",
     }),
 
     new ImageMinimizerPlugin({
