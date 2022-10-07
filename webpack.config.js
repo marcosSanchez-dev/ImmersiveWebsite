@@ -10,8 +10,6 @@ const TerserPlugin = require("terser-webpack-plugin");
 const IS_DEVELOPMENT = process.env.NODE_ENV === "dev";
 
 const dirApp = path.join(__dirname, "app");
-const dirImages = path.join(__dirname, "images");
-const dirVideos = path.join(__dirname, "videos");
 const dirShared = path.join(__dirname, "shared");
 const dirStyles = path.join(__dirname, "styles");
 const dirNode = "node_modules";
@@ -21,7 +19,7 @@ module.exports = {
   entry: [path.join(dirApp, "index.js"), path.join(dirStyles, "index.scss")],
 
   resolve: {
-    modules: [dirApp, dirShared, dirStyles, dirNode, dirImages, dirVideos],
+    modules: [dirApp, dirShared, dirStyles, dirNode],
   },
 
   plugins: [
