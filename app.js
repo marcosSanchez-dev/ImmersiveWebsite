@@ -14,8 +14,8 @@ app.get("/about", (req, res) => {
   res.render("pages/about");
 });
 
-app.get("/collections", (req, res) => {
-  res.render("pages/collections");
+app.get("/collection", (req, res) => {
+  res.render("pages/collection");
 });
 
 app.listen(port, () => {
