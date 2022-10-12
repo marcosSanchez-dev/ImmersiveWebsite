@@ -41,7 +41,7 @@ app.use((req, res, next) => {
     linkResolver: HandleLinkResolver,
   };
 
-  res.locals.PrismicH = PrismicH;
+  res.locals.PrismicDOM = PrismicDOM;
   next();
 });
 
@@ -60,6 +60,12 @@ app.get("/about", async (req, res) => {
       .then((response) => {
         const { results } = response;
         const [about, meta] = results;
+
+        // console.log("aboutBodyIMAGE: ", about.data.body[1].primary.image);
+
+        // about.data.gallery.forEach((media) => {
+        //   // console.log("mediaObject: ", media);
+        // });
 
         res.render("pages/about", {
           about,
