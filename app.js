@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const path = require("path");
+const errorHandler = require("errorhandler");
 
 const Prismic = require("@prismicio/client");
 const PrismicDOM = require("prismic-dom");
@@ -35,6 +36,8 @@ const HandleLinkResolver = (doc) => {
   return "/";
 };
 
+app.use(errorHandler());
+
 app.use((req, res, next) => {
   res.locals.ctx = {
     endpoint: process.env.PRISMIC_ENDPOINT,
@@ -64,14 +67,18 @@ app.get("/about", async (req, res) => {
   });
 });
 
-app.get("/collection", (req, res) => {
-  res.render("pages/collection");
+app.get("/collections", (req, res) => {
+  res.render("pages/collections");
 });
 
 app.get("/detail/:uid", async (req, res) => {
   const api = await initApi(req);
   const meta = await api.getSingle("meta");
-  const product = await api.getByUID("product", req.params.uid);
+  const product = await api.getByUID("product", req.params.uid, {
+    fetchLinks: "collection.title",
+  });
+
+  console.log(product);
   res.render("pages/detail", {
     meta,
     product,

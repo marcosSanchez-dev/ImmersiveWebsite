@@ -23,6 +23,7 @@
     "concurrently": "^7.4.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
+    "errorhandler": "^1.5.1",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^15.0.1",
     "eslint-loader": "^4.0.2",
