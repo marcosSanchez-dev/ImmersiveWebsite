@@ -54,29 +54,28 @@ app.get("/", (req, res) => {
 });
 
 app.get("/about", async (req, res) => {
-  initApi(req).then((api) => {
-    api
-      .query(Prismic.Predicates.any("document.type", ["about", "meta"]))
-      .then((response) => {
-        const { results } = response;
-        const [about, meta] = results;
+  const api = await initApi(req);
+  const meta = await api.getSingle("meta");
+  const about = await api.getSingle("about");
 
-        // console.log("aboutBodyIMAGE: ", about.data.body[1].primary.image);
-
-        // about.data.gallery.forEach((media) => {
-        //   // console.log("mediaObject: ", media);
-        // });
-
-        res.render("pages/about", {
-          about,
-          meta,
-        });
-      });
+  res.render("pages/about", {
+    about,
+    meta,
   });
 });
 
 app.get("/collection", (req, res) => {
   res.render("pages/collection");
+});
+
+app.get("/detail/:uid", async (req, res) => {
+  const api = await initApi(req);
+  const meta = await api.getSingle("meta");
+  const product = await api.getByUID("product", req.params.uid);
+  res.render("pages/detail", {
+    meta,
+    product,
+  });
 });
 
 app.listen(port, () => {
