@@ -67,8 +67,21 @@ app.get("/about", async (req, res) => {
   });
 });
 
-app.get("/collections", (req, res) => {
-  res.render("pages/collections");
+app.get("/collections", async (req, res) => {
+  const api = await initApi(req);
+  const meta = await api.getSingle("meta");
+  const { results: collections } = await api.query(
+    Prismic.Predicates.at("document.type", "collection", {
+      fetchLinks: "product.image",
+    })
+  );
+
+  console.log("collections: ", collections[0].data.products);
+
+  res.render("pages/collections", {
+    meta,
+    collections,
+  });
 });
 
 app.get("/detail/:uid", async (req, res) => {
@@ -78,7 +91,6 @@ app.get("/detail/:uid", async (req, res) => {
     fetchLinks: "collection.title",
   });
 
-  console.log(product);
   res.render("pages/detail", {
     meta,
     product,

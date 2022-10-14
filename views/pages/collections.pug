@@ -4,4 +4,13 @@ block variables
  - var template  ='collections'
 
 block content
-  h1.collection__title Collections.pug
+  .collections
+    .collections__wrapper
+      .collections__gallery
+        .collections__gallery__wrapper
+          each collection in collections
+            each product in collection.data.products
+              a.collections__gallery__link(href="")
+                figure.collections__gallery__media
+                  //- img.collections__gallery__media__image(alt=product.products_product.data.image.alt src=product.products_product.data.image.url style="width:10%")
+
