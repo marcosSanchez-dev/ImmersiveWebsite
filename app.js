@@ -1,10 +1,19 @@
 require("dotenv").config();
 
+const logger = require("morgan");
 const express = require("express");
 const app = express();
 const port = 3000;
 const path = require("path");
 const errorHandler = require("errorhandler");
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+
+app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride());
+app.use(errorHandler());
 
 const Prismic = require("@prismicio/client");
 const PrismicDOM = require("prismic-dom");
@@ -36,8 +45,6 @@ const HandleLinkResolver = (doc) => {
   return "/";
 };
 
-app.use(errorHandler());
-
 app.use((req, res, next) => {
   // res.locals.ctx = {
   //   endpoint: process.env.PRISMIC_ENDPOINT,
@@ -65,14 +72,29 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 app.locals.basedir = app.get("views");
 
-app.get("/", (req, res) => {
-  res.render("pages/home");
+app.get("/", async (req, res) => {
+  const api = await initApi(req);
+  const home = await api.getSingle("home");
+  const meta = await api.getSingle("meta");
+  const preloader = await api.getSingle("preloader");
+
+  const { results: collections } = await api.query(
+    Prismic.Predicates.at("document.type", "collection"),
+    { fetchLinks: "product.image" }
+  );
+
+  res.render("pages/home", {
+    collections,
+    home,
+    meta,
+    preloader,
+  });
 });
 
 app.get("/about", async (req, res) => {
   const api = await initApi(req);
-  const meta = await api.getSingle("meta");
   const about = await api.getSingle("about");
+  const meta = await api.getSingle("meta");
   const preloader = await api.getSingle("preloader");
 
   // console.log("preloader: ", preloader);

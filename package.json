@@ -51,8 +51,11 @@
   "dependencies": {
     "@prismicio/client": "^5.1.1",
     "@prismicio/helpers": "^2.3.5",
+    "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "prismic-dom": "^2.2.7",
     "pug": "^3.0.2",
