@@ -39,11 +39,24 @@ const HandleLinkResolver = (doc) => {
 app.use(errorHandler());
 
 app.use((req, res, next) => {
-  res.locals.ctx = {
-    endpoint: process.env.PRISMIC_ENDPOINT,
-    linkResolver: HandleLinkResolver,
-  };
+  // res.locals.ctx = {
+  //   endpoint: process.env.PRISMIC_ENDPOINT,
+  //   linkResolver: HandleLinkResolver,
+  // };
 
+  res.locals.Links = HandleLinkResolver;
+
+  res.locals.Numbers = (index) => {
+    return index == 0
+      ? "One"
+      : index == 1
+      ? "Two"
+      : index == 2
+      ? "Three"
+      : index == 3
+      ? "Four"
+      : "";
+  };
   res.locals.PrismicDOM = PrismicDOM;
   next();
 });
@@ -60,50 +73,41 @@ app.get("/about", async (req, res) => {
   const api = await initApi(req);
   const meta = await api.getSingle("meta");
   const about = await api.getSingle("about");
+  const preloader = await api.getSingle("preloader");
+
+  // console.log("preloader: ", preloader);
 
   res.render("pages/about", {
     about,
     meta,
+    preloader,
   });
 });
 
-// app.get("/collections", async (req, res) => {
-//   const api = await initApi(req);
-//   const meta = await api.getSingle("meta");
-//   const { results: collections } = await api.query(
-//     Prismic.Predicates.at("document.type", "collection", {
-//       fetchLinks: "product.image",
-//     })
-//   );
-
-//   collections.forEach((collection) => {
-//     console.log("newEnv: ", collection.data.products[0].products_product);
-//   });
-
-//   res.render("pages/collections", {
-//     meta,
-//     collections,
-//   });
-// });
-
 app.get("/collections", async (req, res) => {
   const api = await initApi(req);
-
   const meta = await api.getSingle("meta");
+  const home = await api.getSingle("home");
+  const preloader = await api.getSingle("preloader");
+
   const { results: collections } = await api.query(
     Prismic.Predicates.at("document.type", "collection"),
     { fetchLinks: "product.image" }
   );
 
   res.render("pages/collections", {
-    meta,
     collections,
+    home,
+    meta,
+    preloader,
   });
 });
 
 app.get("/detail/:uid", async (req, res) => {
   const api = await initApi(req);
   const meta = await api.getSingle("meta");
+  const preloader = await api.getSingle("preloader");
+
   const product = await api.getByUID("product", req.params.uid, {
     fetchLinks: "collection.title",
   });
@@ -111,6 +115,7 @@ app.get("/detail/:uid", async (req, res) => {
   res.render("pages/detail", {
     meta,
     product,
+    preloader,
   });
 });
 

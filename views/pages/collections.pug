@@ -6,6 +6,11 @@ block variables
 block content
   .collections
     .collections__wrapper
+      .collections__titles
+        each collection, index in collections
+          .collections__titles__label= `${home.data.collection} ${Numbers(index)}`
+          .collections__titles__title= collection.data.title
+
       .collections__gallery
         .collections__gallery__wrapper
           each collection in collections
@@ -13,4 +18,10 @@ block content
               a.collections__gallery__link(href="")
                 figure.collections__gallery__media
                   img.collections__gallery__media__image(alt=product.products_product.data.image.alt src=product.products_product.data.image.url style="width:10%")
+
+      .collections__content
+        each collection in collections
+          article.collections__article
+            h2.collections__article__title= `${collection.data.title} ${home.data.collection}`
+            p.collections__article__description= collection.data.description
 
