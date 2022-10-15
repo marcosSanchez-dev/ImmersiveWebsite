@@ -67,18 +67,33 @@ app.get("/about", async (req, res) => {
   });
 });
 
+// app.get("/collections", async (req, res) => {
+//   const api = await initApi(req);
+//   const meta = await api.getSingle("meta");
+//   const { results: collections } = await api.query(
+//     Prismic.Predicates.at("document.type", "collection", {
+//       fetchLinks: "product.image",
+//     })
+//   );
+
+//   collections.forEach((collection) => {
+//     console.log("newEnv: ", collection.data.products[0].products_product);
+//   });
+
+//   res.render("pages/collections", {
+//     meta,
+//     collections,
+//   });
+// });
+
 app.get("/collections", async (req, res) => {
   const api = await initApi(req);
+
   const meta = await api.getSingle("meta");
   const { results: collections } = await api.query(
-    Prismic.Predicates.at("document.type", "collection", {
-      fetchLinks: "product.image",
-    })
+    Prismic.Predicates.at("document.type", "collection"),
+    { fetchLinks: "product.image" }
   );
-
-  collections.forEach((collection) => {
-    console.log("collection: ", collection.data);
-  });
 
   res.render("pages/collections", {
     meta,
