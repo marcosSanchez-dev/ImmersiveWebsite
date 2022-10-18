@@ -30,6 +30,14 @@ const initApi = (req) => {
 };
 
 const HandleLinkResolver = (doc) => {
+  console.log(doc);
+  if (doc.type == "product") {
+    return `/detail/${doc.slug}`;
+  }
+
+  if (doc.type == "about") {
+    return "/about";
+  }
   // if (doc.type === "product") {
   //   return `/detail/${doc.uid}`;
   // }
@@ -51,7 +59,7 @@ app.use((req, res, next) => {
   //   linkResolver: HandleLinkResolver,
   // };
 
-  res.locals.Links = HandleLinkResolver;
+  res.locals.Link = HandleLinkResolver;
 
   res.locals.Numbers = (index) => {
     return index == 0
