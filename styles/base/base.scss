@@ -1,0 +1,7 @@
+body {
+  @extend %cover;
+  // @extend %description-18;
+
+  font-family: $font-suisse-bp;
+  position: fixed;
+}
