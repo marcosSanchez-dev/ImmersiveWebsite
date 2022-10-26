@@ -1,3 +1,10 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+  user-select: none;
+}
+
 html {
   font-size: calc(100vw / 1920 * 10);
 }
@@ -7,7 +14,10 @@ body {
   @extend %description-18;
   font-family: $font-suisse-bp;
   position: fixed;
-  // @include media("<phone") {
-  //   font-weight: bolder;
-  // }
+}
+
+a {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
 }
