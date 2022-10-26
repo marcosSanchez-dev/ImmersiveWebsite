@@ -1,7 +1,10 @@
-body {
-  // @extend %cover;
-  @extend %description-18;
+html {
+  font-size: calc(100vw / 1920 * 10);
+}
 
+body {
+  @extend %cover;
+  @extend %description-18;
   font-family: $font-suisse-bp;
   position: fixed;
   // @include media("<phone") {
