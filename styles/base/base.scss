@@ -1,8 +1,10 @@
 body {
   // @extend %cover;
-  // @extend %description-18;
+  @extend %description-18;
 
   font-family: $font-suisse-bp;
   position: fixed;
-  font-weight: 300;
+  // @include media("<phone") {
+  //   font-weight: bolder;
+  // }
 }
