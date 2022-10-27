@@ -21,3 +21,13 @@ a {
   outline: none;
   text-decoration: none;
 }
+
+img {
+  // opacity: 0;
+  transition: opacity 0.4s ease;
+  vertical-align: middle;
+
+  &.loaded {
+    opacity: 1;
+  }
+}
