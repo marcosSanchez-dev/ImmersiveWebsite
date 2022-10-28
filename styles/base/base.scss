@@ -11,9 +11,9 @@ html {
 
 body {
   @extend %cover;
-  @extend %description-18;
+  @extend %description-16;
   font-family: $font-suisse-bp;
-  position: fixed;
+  // position: fixed; Activar cuando sea necesario
 }
 
 a {
