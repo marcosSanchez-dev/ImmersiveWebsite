@@ -14,12 +14,13 @@ block content
 
         each section in about.data.body
           if section.slice_type == 'title'
-            h2.about__title= section.primary.text
+            h2.about__title= section.primary.text.replace(/\n/g, '<br>')
 
           if section.slice_type == 'content'
-            section.about__content
+            section.about__content(class=`${section.primary.type === 'Left' ? 'about__content--left' : 'about__content--right' }`)
               .about__content__wrapper
-                p.about__content__label= section.primary.label
+                .about__content__box
+                  p.about__content__label= section.primary.label
 
                 .about__content__description!= PrismicDOM.RichText.asHtml(section.primary.description)
 

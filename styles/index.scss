@@ -8,6 +8,7 @@
 
 @import "./shared/descriptions";
 @import "./shared/titles";
+@import "./shared/links";
 @import "./shared/pages";
 @import "./shared/vertical-titles";
 
@@ -15,6 +16,8 @@
 @import "./base/base";
 
 @import "./components/preloader";
+
+@import "./layouts/navigation";
 
 @import "./pages/about/about";
 @import "./pages/about/content";
