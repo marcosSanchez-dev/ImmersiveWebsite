@@ -52,8 +52,6 @@
 
 /*! html-entities */
 
-/*! images/Marcos.jpg */
-
 /*! tapable/lib/SyncBailHook */
 
 /*! webpack/hot/emitter.js */
@@ -69,10 +67,6 @@
 /*!***************************!*\
   !*** ./styles/index.scss ***!
   \***************************/
-
-/*!*******************************!*\
-  !*** ./app/images/Marcos.jpg ***!
-  \*******************************/
 
 /*!***************************************!*\
   !*** ./node_modules/events/events.js ***!
