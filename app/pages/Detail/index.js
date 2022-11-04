@@ -4,6 +4,7 @@ export default class Detail extends Page {
   constructor() {
     super({
       id: "detail",
+      element: ".detail",
     });
 
     // console.log("Detail Constructor");

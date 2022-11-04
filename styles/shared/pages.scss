@@ -1,8 +1,8 @@
 %page {
   @extend %cover;
 
-  opacity: 0;
-  visibility: hidden;
+  // opacity: 0; comentarios momentaneo, hay que descomentar
+  // visibility: hidden;  comentarios momentaneo, hay que descomentar
   z-index: z("content");
 }
 
