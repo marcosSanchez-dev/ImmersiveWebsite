@@ -12,10 +12,10 @@ export default class Page {
     this.element = document.querySelector(this.selector);
     this.elements = {};
 
-    console.log("this.selectorChildren: ", this.selectorChildren);
+    // console.log("this.selectorChildren: ", this.selectorChildren);
 
     each(this.selectorChildren, (entry, key) => {
-      console.log("key: ", key, " entry: ", entry);
+      // console.log("key: ", key, " entry: ", entry);
 
       if (
         entry instanceof window.HTMLElement ||
@@ -34,14 +34,14 @@ export default class Page {
       }
     });
 
-    console.log(
-      "Current page id: ",
-      this.id,
-      " Current Page element: ",
-      this.element
-    );
+    // console.log(
+    //   "Current page id: ",
+    //   this.id,
+    //   " Current Page element: ",
+    //   this.element
+    // );
 
-    console.log("This.elements: ", this.elements);
+    // console.log("This.elements: ", this.elements);
   }
 
   show() {

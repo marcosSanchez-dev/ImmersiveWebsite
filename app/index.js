@@ -32,10 +32,25 @@ class App {
     this.page.show();
   }
 
-  onChange(url) {
-    const request = window.fetch(url);
+  async onChange(url) {
+    const request = await window.fetch(url); //mandamos a llamar el contenido de una página sin que nos redirija a ella
 
-    console.log("request: ", request);
+    if (request.status === 200) {
+      const html = await request.text();
+      const div = document.createElement("div");
+
+      div.innerHTML = html;
+
+      const divContent = div.querySelector(".content");
+
+      this.content.innerHTML = divContent.innerHTML;
+      // this.content.appendChild(div);
+
+      // console.log(request);
+      // console.log("html: " + html);
+    } else {
+      console.log("error: ", error);
+    }
   }
 
   addLinkListeners() {
