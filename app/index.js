@@ -14,9 +14,7 @@ class App {
 
   createContent() {
     this.content = document.querySelector(".content");
-    // console.log(this.content);
     this.template = this.content.getAttribute("data-template");
-    // console.log(this.template);
   }
 
   createPages() {
@@ -33,21 +31,26 @@ class App {
   }
 
   async onChange(url) {
+    await this.page.hide();
+
     const request = await window.fetch(url); //mandamos a llamar el contenido de una página sin que nos redirija a ella
 
     if (request.status === 200) {
-      const html = await request.text();
-      const div = document.createElement("div");
+      const html = await request.text(); //traes tu request en formato Texto
+      const div = document.createElement("div"); //al ser creado, este DIV no esta en el body del documento
 
-      div.innerHTML = html;
+      div.innerHTML = html; //crear una copia del HTML en este DIV que sería como un nuevo "document."
 
-      const divContent = div.querySelector(".content");
+      const divContent = div.querySelector(".content"); //seleccionas el elemento .content dentro de este nuevo "document" llamado "div"
 
-      this.content.innerHTML = divContent.innerHTML;
-      // this.content.appendChild(div);
+      this.template = divContent.getAttribute("data-template");
 
-      // console.log(request);
-      // console.log("html: " + html);
+      this.content.setAttribute("data-template", this.template);
+      this.content.innerHTML = divContent.innerHTML; // reemplazas el innerHTML del ".content" original por la copia
+
+      this.page = this.pages[this.template];
+      this.page.create(); // entramos al hijo/nieto y llamamos la funcion del padre por medio de EXTENDS
+      this.page.show();
     } else {
       console.log("error: ", error);
     }
