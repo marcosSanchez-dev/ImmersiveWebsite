@@ -1,15 +1,26 @@
 import each from "lodash/each";
+import Preloader from "components/Preloader";
 
-import About from "./pages/About";
-import Home from "./pages/Home";
-import Detail from "./pages/Detail";
-import Collections from "./pages/Collections";
+import About from "pages/About";
+import Home from "pages/Home";
+import Detail from "pages/Detail";
+import Collections from "pages/Collections";
 
 class App {
   constructor() {
+    this.createPreloader();
     this.createContent();
     this.createPages();
     this.addLinkListeners();
+  }
+
+  createPreloader() {
+    this.preloader = new Preloader();
+    this.preloader.once("completed", this.onPreloaded); //esta funcion pertence al EXTENDS "eventEmitter" de su padre "compontent"
+  }
+
+  onPreloaded() {
+    console.log("Preloaded!!");
   }
 
   createContent() {
@@ -51,6 +62,8 @@ class App {
       this.page = this.pages[this.template];
       this.page.create(); // entramos al hijo/nieto y llamamos la funcion del padre por medio de EXTENDS
       this.page.show();
+
+      this.addLinkListeners();
     } else {
       console.log("error: ", error);
     }
