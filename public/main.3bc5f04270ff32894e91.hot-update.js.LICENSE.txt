@@ -1,6 +1,8 @@
 /*! classes/Component */
 
-/*! express */
+/*! gsap */
+
+/*! lodash/each */
 
 /*!*************************************!*\
   !*** ./app/components/Preloader.js ***!

@@ -16,11 +16,13 @@ class App {
 
   createPreloader() {
     this.preloader = new Preloader();
-    this.preloader.once("completed", this.onPreloaded); //esta funcion pertence al EXTENDS "eventEmitter" de su padre "compontent"
+    //se usa THIS para no apuntar al elemento PRELOADER sino al metodo de la clase APP
+    this.preloader.once("completed", this.onPreloaded.bind(this)); //esta funcion pertence al EXTENDS "eventEmitter" de su padre "compontent"
   }
 
   onPreloaded() {
-    console.log("Preloaded!!");
+    this.preloader.destroy();
+    this.page.show();
   }
 
   createContent() {
@@ -38,7 +40,6 @@ class App {
 
     this.page = this.pages[this.template];
     this.page.create(); // entramos al hijo/nieto y llamamos la funcion del padre por medio de EXTENDS
-    this.page.show();
   }
 
   async onChange(url) {
