@@ -7,6 +7,7 @@ export default class About extends Page {
       element: ".about",
       elements: {
         title: ".about_title",
+        wrapper: ".about__wrapper",
       },
     });
     // console.log("About Constructor");

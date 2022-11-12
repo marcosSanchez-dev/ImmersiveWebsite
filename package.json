@@ -43,6 +43,7 @@
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.6.1",
     "postcss-loader": "^7.0.1",
+    "prefix": "^1.0.0",
     "sass": "^1.55.0",
     "sass-loader": "^13.1.0",
     "terser-webpack-plugin": "^5.3.6",

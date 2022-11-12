@@ -11,7 +11,9 @@ class App {
     this.createPreloader();
     this.createContent();
     this.createPages();
+    this.addEventListeners();
     this.addLinkListeners();
+    this.update();
   }
 
   createPreloader() {
@@ -22,6 +24,7 @@ class App {
 
   onPreloaded() {
     this.preloader.destroy();
+    this.onResize();
     this.page.show();
   }
 
@@ -40,6 +43,7 @@ class App {
 
     this.page = this.pages[this.template];
     this.page.create(); // entramos al hijo/nieto y llamamos la funcion del padre por medio de EXTENDS
+    this.onResize();
   }
 
   async onChange(url) {
@@ -70,6 +74,16 @@ class App {
     }
   }
 
+  onResize() {
+    if (this.page && this.page.onResize) {
+      this.page.onResize();
+    }
+  }
+
+  addEventListeners() {
+    window.addEventListener("resize", this.onResize.bind(this));
+  }
+
   addLinkListeners() {
     const links = document.querySelectorAll("a");
 
@@ -81,6 +95,13 @@ class App {
         this.onChange(href);
       };
     });
+  }
+
+  update() {
+    if (this.page && this.page.update) {
+      this.page.update();
+    }
+    this.frame = window.requestAnimationFrame(this.update.bind(this));
   }
 }
 
