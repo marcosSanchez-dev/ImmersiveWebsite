@@ -18,6 +18,7 @@ class App {
 
   createPreloader() {
     this.preloader = new Preloader();
+
     //se usa THIS para no apuntar al elemento PRELOADER sino al metodo de la clase APP
     this.preloader.once("completed", this.onPreloaded.bind(this)); //esta funcion pertence al EXTENDS "eventEmitter" de su padre "compontent"
   }

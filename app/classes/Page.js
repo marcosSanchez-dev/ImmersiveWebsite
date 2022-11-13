@@ -1,4 +1,5 @@
 import GSAP from "gsap";
+import NormalizeWheel from "normalize-wheel";
 import Prefix from "prefix";
 import each from "lodash/each";
 export default class Page {
@@ -9,8 +10,6 @@ export default class Page {
     this.transformPrefix = Prefix("transform");
 
     this.onMouseWheelEvent = this.onMouseWheel.bind(this);
-
-    // console.log("transformPrefix: ", this.transformPrefix);
   }
 
   create() {
@@ -72,11 +71,9 @@ export default class Page {
   }
 
   onMouseWheel(event) {
-    const { deltaY } = event;
+    const { pixelY } = NormalizeWheel(event); // pixelY es la cantida de scroll que haces, no tiene unidad solo se mide en numeros
 
-    // console.log("deltaY: ", deltaY);
-
-    this.scroll.target += deltaY;
+    this.scroll.target += pixelY;
   }
 
   onResize() {
@@ -101,6 +98,7 @@ export default class Page {
     );
 
     if (this.scroll.current < 0.01) {
+      //este es un TIP ya que GSAP o el navegador no interpretan correctamente valores abajo de 0.01
       this.scroll.current = 0;
     }
 
@@ -112,10 +110,10 @@ export default class Page {
   }
 
   addEventListeners() {
-    window.addEventListener("mousewheel", this.onMouseWheelEvent);
+    window.addEventListener("wheel", this.onMouseWheelEvent);
   }
 
   removeEventListeners() {
-    window.removeEventListener("mousewheel", this.onMouseWheelEvent);
+    window.removeEventListener("wheel", this.onMouseWheelEvent);
   }
 }
