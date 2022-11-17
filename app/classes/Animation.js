@@ -14,10 +14,10 @@ export default class Animation extends Component {
       // el IntersectionObserver te indica cuando un elemento es visible dentro del viewport
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log("animateIN");
+          // console.log("animateIN");
           this.animateIn();
         } else {
-          console.log("animateOUT");
+          // console.log("animateOUT");
           this.animateOut();
         }
       });

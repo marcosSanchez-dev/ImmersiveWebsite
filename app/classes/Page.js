@@ -4,12 +4,18 @@ import Prefix from "prefix";
 import each from "lodash/each";
 import map from "lodash/map";
 import Title from "animations/Title";
+import Paragraph from "animations/Paragraph";
+import Label from "animations/Label";
+import Highlight from "animations/Highlight";
 export default class Page {
   constructor({ id, element, elements }) {
     this.selector = element;
     this.selectorChildren = {
       ...elements,
       animationsTitles: "[data-animation='title']", // key | entry // selecciona por medio de querySelectorAll elementos con esta condicion
+      animationsParagraphs: "[data-animation='paragraph']",
+      animationsLabels: "[data-animation='label']",
+      animationsHighlights: "[data-animation='highlight']",
     };
     this.id = id;
     this.transformPrefix = Prefix("transform");
@@ -44,9 +50,42 @@ export default class Page {
   }
 
   createAnimations() {
+    this.animations = [];
+
+    //titles
+
     this.animationsTitles = map(this.elements.animationsTitles, (element) => {
       return new Title({ element }); // creas instancias de la clase Title y le mando el elemento a animar, y que a su vez se propaga hacia los componentes padres por medio del super
     });
+
+    this.animations.push(...this.animationsTitles);
+
+    //paragraphs
+
+    this.animationsParagraphs = map(
+      this.elements.animationsParagraphs,
+      (element) => {
+        return new Paragraph({ element });
+      }
+    );
+    this.animations.push(...this.animationsParagraphs);
+
+    //Labels
+
+    this.animationsLabels = map(this.elements.animationsLabels, (element) => {
+      return new Label({ element });
+    });
+    this.animations.push(...this.animationsLabels);
+
+    //Higlights
+
+    this.animationsHighlights = map(
+      this.elements.animationsHighlights,
+      (element) => {
+        return new Highlight({ element });
+      }
+    );
+    this.animations.push(...this.animationsHighlights);
   }
 
   show() {
@@ -94,8 +133,8 @@ export default class Page {
       this.scroll.limit =
         this.elements.wrapper.clientHeight - window.innerHeight;
     }
-
-    each(this.animationsTitles, (animation) => animation.onResize());
+    // console.log("this.animations: ", this.animations);
+    each(this.animations, (animation) => animation.onResize());
   }
 
   update() {
