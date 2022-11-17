@@ -2,10 +2,15 @@ import GSAP from "gsap";
 import NormalizeWheel from "normalize-wheel";
 import Prefix from "prefix";
 import each from "lodash/each";
+import map from "lodash/map";
+import Title from "animations/Title";
 export default class Page {
   constructor({ id, element, elements }) {
     this.selector = element;
-    this.selectorChildren = { ...elements };
+    this.selectorChildren = {
+      ...elements,
+      animationsTitles: "[data-animation='title']", // key | entry // selecciona por medio de querySelectorAll elementos con esta condicion
+    };
     this.id = id;
     this.transformPrefix = Prefix("transform");
 
@@ -33,6 +38,14 @@ export default class Page {
           this.elements[key] = document.querySelector(entry);
         }
       }
+    });
+
+    this.createAnimations();
+  }
+
+  createAnimations() {
+    this.animationsTitles = map(this.elements.animationsTitles, (element) => {
+      return new Title({ element }); // creas instancias de la clase Title y le mando el elemento a animar, y que a su vez se propaga hacia los componentes padres por medio del super
     });
   }
 

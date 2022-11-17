@@ -5,6 +5,7 @@ import { split } from "utils/text";
 export default class Preloader extends Component {
   constructor() {
     super({
+      //este super manda a llamar los metodos del Component antes de ejecutar los metodos del Preloader
       element: ".preloader",
       elements: {
         title: ".preloader__text",
