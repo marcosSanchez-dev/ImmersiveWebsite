@@ -1,8 +1,8 @@
 %page {
   @extend %cover;
 
-  opacity: 0;
-  visibility: hidden;
+  opacity: 0; // detiene el flashing en la animacion
+  visibility: hidden; // detiene el flashing en la animacion
   z-index: z("content");
 }
 
