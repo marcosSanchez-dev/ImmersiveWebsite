@@ -1,6 +1,7 @@
 import each from "lodash/each";
 import Preloader from "components/Preloader";
 
+import Navigation from "components/Navigation";
 import About from "pages/About";
 import Home from "pages/Home";
 import Detail from "pages/Detail";
@@ -8,12 +9,17 @@ import Collections from "pages/Collections";
 
 class App {
   constructor() {
-    this.createPreloader();
     this.createContent();
+    this.createPreloader();
+    this.createNavigation();
     this.createPages();
     this.addEventListeners();
     this.addLinkListeners();
     this.update();
+  }
+
+  createNavigation() {
+    this.navigation = new Navigation({ template: this.template });
   }
 
   createPreloader() {
@@ -62,11 +68,14 @@ class App {
 
       this.template = divContent.getAttribute("data-template");
 
+      this.navigation.onChange(this.template);
+
       this.content.setAttribute("data-template", this.template);
       this.content.innerHTML = divContent.innerHTML; // reemplazas el innerHTML del ".content" original por la copia
 
       this.page = this.pages[this.template];
       this.page.create(); // entramos al hijo/nieto y llamamos la funcion del padre por medio de EXTENDS
+      this.onResize();
       this.page.show();
 
       this.addLinkListeners();

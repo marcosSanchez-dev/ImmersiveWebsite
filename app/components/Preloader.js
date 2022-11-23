@@ -53,6 +53,7 @@ export default class Preloader extends Component {
   }
 
   onLoaded() {
+    // las funciones async se caracterizan por retornar promesas. Sería lo mismo a decir 'async onLoaded()'
     return new Promise((resolve) => {
       this.animateOut = GSAP.timeline({ delay: 2 });
 
