@@ -12,12 +12,12 @@ export default class AsyncLoad extends Component {
       // el IntersectionObserver te indica cuando un elemento es visible dentro del viewport
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log("element:  ", this.element);
-          console.log(
-            "getAttribute('data-src'):  ",
-            this.element.getAttribute("data-src")
-          );
-          this.element.src = this.element.getAttribute("data-src");
+          if (!this.element.src) {
+            this.element.src = this.element.getAttribute("data-src");
+            this.element.onload = (_) => {
+              this.element.classList.add("loaded");
+            };
+          }
         }
       });
     });

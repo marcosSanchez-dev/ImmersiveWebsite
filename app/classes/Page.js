@@ -126,8 +126,7 @@ export default class Page {
 
   hide() {
     return new Promise((resolve) => {
-      this.removeEventListeners();
-
+      this.destroy();
       this.animationOut = GSAP.timeline();
 
       this.animationOut.to(this.element, {
@@ -184,5 +183,9 @@ export default class Page {
 
   removeEventListeners() {
     window.removeEventListener("wheel", this.onMouseWheelEvent);
+  }
+
+  destroy() {
+    this.removeEventListeners();
   }
 }

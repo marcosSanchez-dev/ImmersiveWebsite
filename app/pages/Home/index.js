@@ -1,3 +1,4 @@
+import Button from "classes/Button";
 import Page from "classes/Page";
 
 export default class Home extends Page {
@@ -10,7 +11,17 @@ export default class Home extends Page {
         navigation: document.querySelector(".navigation"),
       },
     });
+  }
 
-    // console.log("Home Constructor");
+  create() {
+    super.create();
+    this.link = new Button({
+      element: this.elements.link,
+    });
+  }
+
+  destroy() {
+    super.destroy();
+    this.link.removeEventListeners();
   }
 }
