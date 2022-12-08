@@ -54,7 +54,8 @@ img {
 canvas {
   pointer-events: none;
   position: relative;
-  z-index: z("canvas");
+  // z-index: z("canvas"); comentario temporal, hay que descomentarlo
+  z-index: 0;
 }
 
 .content {
