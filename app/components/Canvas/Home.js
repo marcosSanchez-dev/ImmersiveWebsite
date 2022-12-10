@@ -3,15 +3,18 @@ import map from "lodash/map";
 import { Plane, Transform } from "ogl";
 
 export default class {
-  constructor({ gl, scene }) {
+  constructor({ gl, scene, sizes }) {
     this.group = new Transform();
     this.gl = gl;
-    this.medias = document.querySelectorAll(".home__gallery__media__image");
+    this.sizes = sizes;
+    this.mediasElements = document.querySelectorAll(
+      ".home__gallery__media__image"
+    );
 
     this.createGeometry();
     this.createGallery();
 
-    this.group.setParent(scene);
+    this.group.setParent(scene); //aqui esta linkeando el transform dentro de index.js, a este nuevo transform
   }
 
   createGeometry() {
@@ -19,14 +22,21 @@ export default class {
   }
 
   createGallery() {
-    map(this.medias, (element, index) => {
+    this.medias = map(this.mediasElements, (element, index) => {
       return new Media({
         element,
         geometry: this.geometry,
         index,
         gl: this.gl,
         scene: this.group,
+        sizes: this.sizes,
       });
+    });
+  }
+
+  onResize(event) {
+    map(this.medias, (media) => {
+      media.onResize(event);
     });
   }
 }
