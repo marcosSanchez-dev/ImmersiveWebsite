@@ -1,5 +1,4 @@
 import GSAP from "gsap";
-import NormalizeWheel from "normalize-wheel";
 import Prefix from "prefix";
 import each from "lodash/each";
 import map from "lodash/map";
@@ -23,7 +22,7 @@ export default class Page {
     this.id = id;
     this.transformPrefix = Prefix("transform");
 
-    this.onMouseWheelEvent = this.onMouseWheel.bind(this);
+    // this.onMouseWheelEvent = this.onMouseWheel.bind(this);
   }
 
   create() {
@@ -136,12 +135,6 @@ export default class Page {
     });
   }
 
-  onMouseWheel(event) {
-    const { pixelY } = NormalizeWheel(event); // pixelY es la cantida de scroll que haces, no tiene unidad solo se mide en numeros
-
-    this.scroll.target += pixelY;
-  }
-
   onResize() {
     if (this.elements.wrapper) {
       this.scroll.limit =
@@ -149,6 +142,12 @@ export default class Page {
     }
     // console.log("this.animations: ", this.animations);
     each(this.animations, (animation) => animation.onResize());
+  }
+
+  onWheel({ pixelY }) {
+    //const { pixelY } = NormalizeWheel(event); // pixelY es la cantida de scroll que haces, no tiene unidad solo se mide en numeros
+
+    this.scroll.target += pixelY;
   }
 
   update() {
@@ -178,11 +177,11 @@ export default class Page {
   }
 
   addEventListeners() {
-    window.addEventListener("wheel", this.onMouseWheelEvent);
+    // window.addEventListener("wheel", this.onMouseWheelEvent);
   }
 
   removeEventListeners() {
-    window.removeEventListener("wheel", this.onMouseWheelEvent);
+    // window.removeEventListener("wheel", this.onMouseWheelEvent);
   }
 
   destroy() {

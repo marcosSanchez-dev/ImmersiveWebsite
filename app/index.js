@@ -1,6 +1,7 @@
 import each from "lodash/each";
 import Canvas from "components/Canvas";
 import Preloader from "components/Preloader";
+import NormalizeWheel from "normalize-wheel";
 
 import Navigation from "components/Navigation";
 import About from "pages/About";
@@ -91,13 +92,19 @@ class App {
   }
 
   onResize() {
-    if (this.canvas && this.canvas.onResize) {
-      this.canvas.onResize();
-    }
+    // if (this.canvas && this.canvas.onResize) {
+    //   this.canvas.onResize();
+    // }
 
     if (this.page && this.page.onResize) {
       this.page.onResize();
     }
+
+    window.requestAnimationFrame((_) => {
+      if (this.canvas && this.canvas.onResize) {
+        this.canvas.onResize();
+      }
+    });
   }
 
   onTouchDown(e) {

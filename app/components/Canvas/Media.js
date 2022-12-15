@@ -1,5 +1,5 @@
 import { Mesh, Program, Texture } from "ogl";
-
+import GSAP from "gsap";
 import fragment from "shaders/plane-fragment.glsl";
 import vertex from "shaders/plane-vertex.glsl";
 
@@ -55,8 +55,9 @@ export default class {
     });
 
     this.mesh.setParent(this.scene); //agregas el MESH a la escena
+    this.mesh.rotation.z = GSAP.utils.random(-Math.PI * 0.03, Math.PI * 0.03);
 
-    this.mesh.scale.x = 2;
+    // this.mesh.scale.x = 2;
   }
 
   createBounds({ sizes }) {
@@ -68,8 +69,15 @@ export default class {
     this.updateY();
   }
 
-  onResize(sizes) {
+  onResize(sizes, scroll) {
+    this.extra = {
+      x: 0,
+      y: 0,
+    };
+
     this.createBounds(sizes);
+    this.updateX(scroll ? scroll.x : 0);
+    this.updateY(scroll ? scroll.y : 0);
   }
 
   updateScale() {
