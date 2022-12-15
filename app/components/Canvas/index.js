@@ -23,7 +23,9 @@ export default class Canvas {
   }
 
   createRenderer() {
-    this.renderer = new Renderer(); // el primer paso es crear el RENDERER
+    this.renderer = new Renderer({
+      alpha: true,
+    }); // el primer paso es crear el RENDERER
 
     this.gl = this.renderer.gl;
 
@@ -92,10 +94,10 @@ export default class Canvas {
 
   onTouchUp(e) {
     this.isDown = false;
-    const x = e.touches ? e.touches[0].clientX : e.clientX;
-    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    const y = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
 
-    this.x.end = x;
+    this.x.end = x; // es END porque termina la interaccion de Drag & drop
     this.y.end = y;
 
     if (this.home) {

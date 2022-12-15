@@ -137,7 +137,7 @@ class App {
     window.addEventListener("mousemove", this.onTouchMove.bind(this));
     window.addEventListener("mouseup", this.onTouchUp.bind(this));
 
-    window.addEventListener("touchstart", this.onTouchDown.bind(this));
+    window.addEventListener("touchstart", this.onTouchDown.bind(this)); //llamas las mismas funciones para ser disparadas por medio de mouse o touchscreen
     window.addEventListener("touchmove", this.onTouchMove.bind(this));
     window.addEventListener("touchend", this.onTouchUp.bind(this));
 
