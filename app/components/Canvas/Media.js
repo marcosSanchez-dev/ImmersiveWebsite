@@ -51,31 +51,49 @@ export default class {
 
     this.mesh.setParent(this.scene); //agregas el MESH a la escena
 
-    this.mesh.position.x += this.index * this.mesh.scale.x;
+    this.mesh.scale.x = 2;
   }
 
   createBounds({ sizes }) {
     this.sizes = sizes;
-    this.bounds = this.element.getBoundingClientRect();
+    this.bounds = this.element.getBoundingClientRect(); // devuele un DOMRect con la informacion del tamaño del elemento
 
     this.updateScale(sizes);
     this.updateX();
     this.updateY();
   }
 
-  updateScale({ height, width }) {
+  onResize(sizes) {
+    this.createBounds(sizes);
+  }
+
+  updateScale() {
     this.height = this.bounds.height / window.innerHeight;
     this.width = this.bounds.width / window.innerWidth;
 
-    this.mesh.scale.x = width * this.width;
-    this.mesh.scale.y = height * this.height;
+    this.mesh.scale.x = this.sizes.width * this.width; //multiplicas la formula predefinida (width) por la relacion que tienen el elemento con el viewport (this.width)
+    this.mesh.scale.y = this.sizes.height * this.height;
   }
 
-  updateX() {}
+  updateX(x = 0) {
+    this.x = (this.bounds.left + x) / window.innerWidth;
 
-  updateY() {}
+    this.mesh.position.x =
+      -this.sizes.width / 2 + this.mesh.scale.x / 2 + this.x * this.sizes.width;
+  }
 
-  onResize(sizes) {
-    this.createBounds(sizes);
+  updateY(y = 0) {
+    this.y = (this.bounds.top + y) / window.innerHeight;
+
+    this.mesh.position.y =
+      this.sizes.height / 2 -
+      this.mesh.scale.y / 2 -
+      this.y * this.sizes.height;
+  }
+
+  update(scroll) {
+    if (!this.bounds) return;
+    this.updateX(scroll.x);
+    this.updateY(scroll.y);
   }
 }

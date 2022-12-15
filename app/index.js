@@ -100,7 +100,47 @@ class App {
     }
   }
 
+  onTouchDown(e) {
+    if (this.canvas && this.canvas.onTouchDown) {
+      this.canvas.onTouchDown(e);
+    }
+  }
+
+  onTouchMove(e) {
+    if (this.canvas && this.canvas.onTouchMove) {
+      this.canvas.onTouchMove(e);
+    }
+  }
+
+  onTouchUp(e) {
+    if (this.canvas && this.canvas.onTouchUp) {
+      this.canvas.onTouchUp(e);
+    }
+  }
+
+  onWheel(e) {
+    const normalizedWheel = NormalizeWheel(e);
+
+    if (this.canvas && this.canvas.onWheel) {
+      this.canvas.onWheel(normalizedWheel);
+    }
+
+    if (this.page && this.page.onWheel) {
+      this.page.onWheel(normalizedWheel);
+    }
+  }
+
   addEventListeners() {
+    window.addEventListener("mousewheel", this.onWheel.bind(this)); //utilizamos bind si queremos llamar un metodo dentro de otro metodo usando THIS
+
+    window.addEventListener("mousedown", this.onTouchDown.bind(this)); // si no usamos BIND, el THIS se refiere al objeto window y no a nuestra classe App
+    window.addEventListener("mousemove", this.onTouchMove.bind(this));
+    window.addEventListener("mouseup", this.onTouchUp.bind(this));
+
+    window.addEventListener("touchstart", this.onTouchDown.bind(this));
+    window.addEventListener("touchmove", this.onTouchMove.bind(this));
+    window.addEventListener("touchend", this.onTouchUp.bind(this));
+
     window.addEventListener("resize", this.onResize.bind(this));
   }
 

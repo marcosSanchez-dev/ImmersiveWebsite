@@ -3,6 +3,18 @@ import Home from "./Home";
 
 export default class Canvas {
   constructor() {
+    this.x = {
+      start: 0,
+      distance: 0,
+      end: 0,
+    };
+
+    this.y = {
+      start: 0,
+      distance: 0,
+      end: 0,
+    };
+
     this.createRenderer();
     this.createCamera();
     this.createScene();
@@ -38,6 +50,7 @@ export default class Canvas {
       aspect: window.innerWidth / window.innerHeight,
     });
 
+    //formulas preestablecidas para asignar un tamaño a las imagenes y utilizas la instancia CAMERA de ogl
     const fov = this.camera.fov * (Math.PI / 180);
     const height = 2 * Math.tan(fov / 2) * this.camera.position.z;
     const width = height * this.camera.aspect;
@@ -52,10 +65,59 @@ export default class Canvas {
     }
   }
 
+  onTouchDown(e) {
+    this.isDown = true;
+
+    this.x.start = e.touches ? e.touches[0].clientX : e.clientX; // toches es un array conformado por los puntos donde el usario toco la pantalla
+    this.y.start = e.touches ? e.touches[0].clientY : e.clientY;
+
+    if (this.home) {
+      this.home.onTouchDown({ x: this.x, y: this.y });
+    }
+  }
+
+  onTouchMove(e) {
+    // La condicion debe ser true para que el RETURN se dispare.
+    if (!this.isDown) return; // se dispara la accion solo cuando el mouse sea oprimido para hacer el efecto drag and drop.
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+
+    this.x.end = x;
+    this.y.end = y;
+
+    if (this.home) {
+      this.home.onTouchMove({ x: this.x, y: this.y });
+    }
+  }
+
+  onTouchUp(e) {
+    this.isDown = false;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+
+    this.x.end = x;
+    this.y.end = y;
+
+    if (this.home) {
+      this.home.onTouchUp({ x: this.x, y: this.y });
+    }
+  }
+
+  onWheel(e) {
+    if (this.home) {
+      this.home.onWheel(e);
+    }
+
+    if (this.collections) {
+      this.collections.onWheel(e);
+    }
+  }
+
   //esta funcion UPDATE es llamada en cada Frame
   update() {
-    // this.mesh.rotation.x += 0.01;
-    // this.mesh.rotation.y += 0.01;
+    if (this.home) {
+      this.home.update();
+    }
 
     this.renderer.render({
       camera: this.camera,
