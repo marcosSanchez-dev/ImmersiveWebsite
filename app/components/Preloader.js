@@ -16,6 +16,7 @@ export default class Preloader extends Component {
     });
 
     split({
+      // this.elements.title ya tiene el valor que la class COMPONENT le dio con sus metodos, en este caso ya es un objeto (ElementHTML) del DOM
       element: this.elements.title,
       expression: "<br>",
     });
