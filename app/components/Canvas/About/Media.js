@@ -32,6 +32,7 @@ export default class {
     this.image.crossOrigin = "anonymous";
 
     this.image.src = this.element.getAttribute("data-src");
+    console.log(this.image.src); //                                        ************** ERROR ************
     this.image.onload = (_) => (this.texture.image = this.image);
   }
 
