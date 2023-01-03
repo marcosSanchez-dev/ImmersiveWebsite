@@ -12,27 +12,29 @@ export default class {
     this.index = index;
     this.sizes = sizes;
 
-    this.createTexture();
-    this.createProgram();
-    this.createMesh();
-
     this.extra = {
       x: 0,
       y: 0,
     };
+
+    this.createTexture();
+    this.createProgram();
+    this.createMesh();
+    this.createBounds({
+      sizes: this.sizes,
+    });
   }
 
   createTexture() {
     this.texture = new Texture(this.gl);
-
+    const image = this.element.querySelector("img");
     this.image = new window.Image();
 
     // necesitas especificar que el crossOrigin no hara intercambio de credenciales.
     // crossOrigin se trata de hacer peticiones de recursos a un servidor con un dominio diferente al del sitio actual
     this.image.crossOrigin = "anonymous";
 
-    this.image.src = this.element.getAttribute("data-src");
-    console.log(this.image.src); //                                        ************** ERROR ************
+    this.image.src = image.getAttribute("data-src");
     this.image.onload = (_) => (this.texture.image = this.image);
   }
 
@@ -71,10 +73,7 @@ export default class {
   }
 
   onResize(sizes, scroll) {
-    this.extra = {
-      x: 0,
-      y: 0,
-    };
+    this.extra = 0;
 
     this.createBounds(sizes);
     this.updateX(scroll);
@@ -96,7 +95,7 @@ export default class {
       -this.sizes.width / 2 +
       this.mesh.scale.x / 2 +
       this.x * this.sizes.width +
-      this.extra.x;
+      this.extra;
   }
 
   updateY(y = 0) {
@@ -105,8 +104,7 @@ export default class {
     this.mesh.position.y =
       this.sizes.height / 2 -
       this.mesh.scale.y / 2 -
-      this.y * this.sizes.height +
-      this.extra.y;
+      this.y * this.sizes.height;
   }
 
   update(scroll) {

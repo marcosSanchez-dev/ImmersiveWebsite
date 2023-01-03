@@ -10,7 +10,7 @@ block content
         .about__gallery__wrapper
           each media in about.data.gallery
             figure.about__gallery__media
-              img.about__gallery__media__image(alt=media.image.alt data-src=media.image.url)
+              img.about__gallery__media__image(data-src=media.image.url alt=media.image.alt )
 
         each section in about.data.body
           if section.slice_type == 'title'

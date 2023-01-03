@@ -13,6 +13,8 @@ export default class Gallery {
     this.scene = scene;
     this.sizes = sizes;
 
+    this.group = new Transform();
+
     this.scroll = {
       current: 0,
       target: 0,
@@ -21,14 +23,15 @@ export default class Gallery {
     };
 
     this.createMedias();
+    this.group.setParent(this.scene);
   }
 
   createMedias() {
     this.mediasElements = this.element.querySelectorAll(
-      ".about__gallery__media"
+      ".about__gallery__media" // este elemento no tiene attribute data-src
     );
 
-    this.media = map(this.mediasElements, (element, index) => {
+    this.medias = map(this.mediasElements, (element, index) => {
       return new Media({
         element,
         geometry: this.geometry,
