@@ -22,7 +22,7 @@ export default class Canvas {
     this.createScene();
     this.onResize();
 
-    this.onRouteUpdate(this.template);
+    this.onChangeEnd(this.template);
   }
 
   createRenderer() {
@@ -70,7 +70,68 @@ export default class Canvas {
     this.about = null;
   }
 
-  onRouteUpdate(template) {
+  createCollections() {
+    // this.collections = new Collections({
+    //   gl: this.gl,
+    //   scene: this.scene,
+    //   sizes: this.sizes,
+    //   transition: this.transition,
+    // });
+  }
+
+  destroyCollections() {
+    // if (!this.collections) return;
+    // this.collections.destroy();
+    // this.collections = null;
+  }
+
+  onChangeEnd(template) {
+    if (template === "about") {
+      this.createAbout();
+    } else {
+      this.destroyAbout();
+    }
+
+    if (template === "home") {
+      this.createHome();
+    } else {
+      this.destroyHome();
+    }
+  }
+
+  onChangeStart(template, url) {
+    if (this.home) {
+      this.home.hide();
+    }
+
+    if (this.collections) {
+      this.collections.hide();
+    }
+
+    if (this.detail) {
+      this.detail.hide();
+    }
+
+    if (this.about) {
+      this.about.hide();
+    }
+
+    // this.isFromCollectionsToDetail = this.template === 'collections' && url.indexOf('detail') > -1; // prettier-ignore
+    // this.isFromDetailToCollections = this.template === 'detail' && url.indexOf('collections') > -1; // prettier-ignore
+
+    // if (this.isFromCollectionsToDetail || this.isFromDetailToCollections) {
+    //   this.transition = new Transition({
+    //     gl: this.gl,
+    //     scene: this.scene,
+    //     sizes: this.sizes,
+    //     url,
+    //   });
+
+    //   this.transition.setElement(this.collections || this.detail);
+    // }
+  }
+
+  onChangeEnd(template) {
     if (template === "home") {
       this.createHome();
     } else {
@@ -79,9 +140,23 @@ export default class Canvas {
 
     if (template === "about") {
       this.createAbout();
-    } else {
+    } else if (this.about) {
       this.destroyAbout();
     }
+
+    if (template === "detail") {
+      this.createDetail();
+    } else if (this.detail) {
+      this.destroyDetail();
+    }
+
+    if (template === "collections") {
+      this.createCollections();
+    } else if (this.collections) {
+      this.destroyCollections();
+    }
+
+    this.template = template;
   }
 
   onResize() {
@@ -179,9 +254,9 @@ export default class Canvas {
   }
 
   //esta funcion UPDATE es llamada en cada Frame
-  update() {
+  update(scroll) {
     if (this.about) {
-      this.about.update();
+      this.about.update(scroll);
     }
     if (this.home) {
       this.home.update();

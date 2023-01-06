@@ -9,9 +9,9 @@ html {
   @extend %cover;
   $vw: 100vw;
   font-size: calc($vw / 1920px * 10px);
-  position: fixed;
+  // position: fixed;  descomentar linea *****
   line-height: 1;
-  overflow: hidden;
+  // overflow: hidden; descomentar linea *****
   background: $color-contessa;
   color: $color-white;
 
@@ -24,7 +24,7 @@ body {
   @extend %cover;
   font-family: $font-suisse-bp;
   @extend %description-16;
-  position: fixed;
+  // position: fixed; descomentar linea *****
 }
 
 a {
@@ -54,8 +54,8 @@ img {
 canvas {
   pointer-events: none;
   position: relative;
-  // z-index: z("canvas"); comentario temporal, hay que descomentarlo
-  z-index: 100;
+  z-index: z("canvas");
+  // z-index: 100;
 }
 
 .content {

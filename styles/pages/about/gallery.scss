@@ -1,9 +1,9 @@
 .about__gallery {
   height: 70.6rem;
   position: relative;
-  // overflow: hidden;
+  // overflow: hidden; *** Descomentar linea ****
   pointer-events: none;
-  // visibility: hidden;
+  // visibility: hidden; *** Descomentar linea ****
 
   &:first-child {
     margin-bottom: 0;
@@ -19,6 +19,7 @@
   align-items: center;
   top: 50%;
   transform: translateY(-50%);
+  visibility: hidden; // Borrar linea ****
 }
 .about__gallery__media {
   position: relative;

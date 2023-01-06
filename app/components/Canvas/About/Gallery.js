@@ -16,6 +16,7 @@ export default class Gallery {
     this.group = new Transform();
 
     this.scroll = {
+      start: 0,
       current: 0,
       target: 0,
       last: 0,
@@ -68,19 +69,21 @@ export default class Gallery {
 
   onTouchDown({ x, y }) {
     //comienza drag & drop
-    this.scroll.current = this.scroll.current;
+    this.scroll.last = this.scroll.current;
   }
 
   onTouchMove({ x, y }) {
     const distance = x.start - x.end;
 
-    this.scroll.target = this.scroll.start - distance;
+    this.scroll.target = this.scroll.last - distance;
   }
 
   onTouchUp({ x, y }) {}
 
-  update() {
+  update(scroll) {
     if (!this.bounds) return;
+
+    // const y = scroll.current / window.innerHeight;
 
     if (this.scroll.current < this.scroll.target) {
       this.direction = "right";
@@ -101,32 +104,24 @@ export default class Gallery {
         const x = media.mesh.position.x + scaleX;
 
         if (x < -this.sizes.width / 2) {
-          media.extra.x += this.gallerySizes.width;
-
-          media.mesh.rotation.z = GSAP.utils.random(
-            -Math.PI * 0.03,
-            Math.PI * 0.03
-          );
+          media.extra += this.width;
         }
       } else if (this.direction == "right") {
         const x = media.mesh.position.x - scaleX;
 
         if (x > this.sizes.width / 2) {
-          media.extra.x -= this.gallerySizes.width;
-
-          media.mesh.rotation.z = GSAP.utils.random(
-            -Math.PI * 0.03,
-            Math.PI * 0.03
-          );
+          media.extra -= this.width;
         }
       }
-
       media.update(this.scroll.current);
+
+      // media.mesh.position.y =
+      //   Math.cos((media.mesh.position.x / this.width) * Math.PI) * 75 - 75;
     });
   }
 
   // Destroy
   destroy() {
-    // this.scene.removeChild(this.group);
+    this.scene.removeChild(this.group);
   }
 }

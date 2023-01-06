@@ -61,6 +61,8 @@ class App {
   }
 
   async onChange(url) {
+    this.canvas.onChangeStart(this.template);
+
     await this.page.hide();
 
     const request = await window.fetch(url); //mandamos a llamar el contenido de una página sin que nos redirija a ella
@@ -79,6 +81,7 @@ class App {
 
       this.content.setAttribute("data-template", this.template);
       this.content.innerHTML = divContent.innerHTML; // reemplazas el innerHTML del ".content" original por la copia
+      this.canvas.onChangeEnd(this.template);
 
       this.page = this.pages[this.template];
       this.page.create(); // entramos al hijo/nieto y llamamos la funcion del padre por medio de EXTENDS

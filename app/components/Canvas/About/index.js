@@ -17,6 +17,8 @@ export default class {
     });
 
     this.group.setParent(scene); //aqui esta linkeando el transform dentro de index.js, a este nuevo transform
+
+    this.show();
   }
 
   createGeometry() {
@@ -37,6 +39,14 @@ export default class {
         sizes: this.sizes,
       });
     });
+  }
+
+  show() {
+    map(this.galleries, (gallery) => gallery.show());
+  }
+
+  hide() {
+    map(this.galleries, (gallery) => gallery.hide());
   }
 
   onResize(event) {
@@ -68,6 +78,12 @@ export default class {
   update(scroll) {
     map(this.galleries, (gallery) => {
       gallery.update(scroll);
+    });
+  }
+
+  destroy() {
+    map(this.galleries, (gallery) => {
+      gallery.destroy();
     });
   }
 }
